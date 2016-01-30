@@ -49,5 +49,8 @@ sudo mkdir -p /usr/local/smartgit/${Smartgit_VERSION}
 sudo cp -r /tmp/smartgit/* /usr/local/smartgit/${Smartgit_VERSION}/
 sudo ln -s /usr/local/smartgit/${Smartgit_VERSION}/bin/smartgit.sh /usr/bin/smartgit
 
+# Install Workbench
+sudo apt-get install mysql-workbench
+
 reboot
 
