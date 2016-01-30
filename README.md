@@ -22,8 +22,7 @@
 
 ###### Copy Installer to 
 
-    cp eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz ~/vagrant/dev_worksttation/files/
-
+    cp eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz  ~/vagrant/dev_workstation/files/
 
 ###### Check Status of the VM
 
