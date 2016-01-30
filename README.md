@@ -4,6 +4,8 @@
 * [Vagrant](https://www.vagrantup.com/)
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+
+
 ## How To Use (OSX/Linux)
 ######  Download the Vagrant file
 
@@ -11,30 +13,47 @@
     cd ~/vagrant
     git clone https://github.com/melb-devs/dev_workstation.git
     cd ~/vagrant/dev_worksttation
+    
+
+###### Download the Linux 64-bit Installer of Eclipse IDE for Java EE Developers 
+
+    http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/marsr
+
+
+###### Copy Installer to 
+
+    cp eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz ~/vagrant/dev_worksttation/files/
+
 
 ###### Check Status of the VM
 
     vagrant status
 
+
 ###### Spin up a VM
 
     vagrant up
+
 
 ###### SSH connect to the VM
 
     vagrant ssh dev-desktop
 
+
 ###### Pause the VM
 
     vagrant suspend dev-desktop
+
 
 ###### Resume the VM
 
     vagrant resume dev-desktop
 
+
 ###### Shutdown the running VM
 
     vagrant halt dev-desktop
+
 
 ###### Destroy the VM
 
