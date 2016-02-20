@@ -14,15 +14,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
    
   # Install xfce and virtualbox additions
-    desktop.vm.provision "shell", path: "files/install_script.sh"
+#    desktop.vm.provision "shell", path: "files/install_script.sh"
 #  config.vm.provision "shell", inline: "sudo apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11"
   # Permit anyone to start the GUI
 #  config.vm.provision "shell", inline: "sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
 
-#  config.vm.network "forwarded_port", guest: 20, host: 1020
     desktop.vm.network "forwarded_port", guest: 80, host: 1080
     desktop.vm.network "private_network", ip: "192.168.50.3"
-#  config.vm.network "forwarded_port", guest: 443, host: 8443
+#    desktop.vm.network "forwarded_port", guest: 443, host: 8443
   end
 end
 

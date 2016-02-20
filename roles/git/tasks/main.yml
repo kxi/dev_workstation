@@ -1,0 +1,57 @@
+- name: Check If GIT is Installed
+  stat: path=/usr/bin/git
+  register: git_binary
+  tags:
+    - install-git
+
+
+- name: Install Packages
+  apt: 
+    pkg: "{{ item }}" 
+    update_cache: yes 
+    cache_valid_time: 3600
+  sudo: True
+  with_items:
+    - autoconf 
+    - libcurl4-gnutls-dev 
+    - libexpat1-dev 
+    - gettext 
+    - libz-dev 
+    - libssl-dev
+  tags:
+    - install-git
+
+
+- name: Download Git Installer
+  get_url: 
+    url: https://github.com/git/git/archive/v{{ GIT_VERSION }}.zip
+    dest: /tmp/v{{ GIT_VERSION }}.zip
+  sudo: True
+  when: not git_binary.stat.exists
+  tags:
+    - install-git
+
+
+- name: Copy and Unzip Git Installer
+  unarchive:
+    src: /tmp/v{{ GIT_VERSION }}.zip
+    dest: /tmp
+    copy: no
+  sudo: True
+  when: not git_binary.stat.exists
+  tags:
+    - install-git
+
+- name: Make, Make Install Git
+  shell: "{{ item }}"
+  args:
+    chdir: "/tmp/git-{{ GIT_VERSION }}"
+  with_items:
+    - make configure 
+    - ./configure --prefix=/usr
+    - make
+    - make install
+  sudo: True
+  tags:
+    - install-git
+

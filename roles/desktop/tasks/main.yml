@@ -1,0 +1,28 @@
+- name: Add Repo 
+  apt_repository: 
+    repo: "{{ item }}" 
+    state: present
+  sudo: True
+  with_items:
+    - ppa:ubuntu-mate-dev/ppa
+    - ppa:ubuntu-mate-dev/trusty-mate
+  tags:
+    - install-desktop
+
+- name: Install Packages
+  apt: 
+    pkg: "{{ item }}" 
+    update_cache: yes 
+    cache_valid_time: 3600
+  sudo: True
+  with_items:
+    - ubuntu-mate-core
+    - ubuntu-mate-desktop
+  tags:
+    - install-desktop
+
+- name: Change Runlevel to 5
+  shell: "init 5"
+  sudo: True
+  tags:
+    - install-desktop

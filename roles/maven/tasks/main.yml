@@ -1,0 +1,38 @@
+- name: Check If Maven is Installed
+  stat: path=/usr/share/maven/apache-maven-$MAVEN_VERSION 
+  register: maven_directory
+  tags:
+    - install-maven
+
+
+- name: Download Maven Installer
+  get_url: 
+    url: https://archive.apache.org/dist/maven/maven-3/{{ MAVEN_VERSION }}/binaries/apache-maven-{{ MAVEN_VERSION }}-bin.tar.gz 
+    dest: /tmp/apache-maven-{{ MAVEN_VERSION }}-bin.tar.gz
+  sudo: True
+  when: not maven_directory.stat.exists
+  tags:
+    - install-maven
+
+
+- name: Copy and Unzip Maven Installer
+  unarchive:
+    src: /tmp/apache-maven-{{ MAVEN_VERSION }}-bin.tar.gz
+    dest: /usr/share
+    copy: no
+  sudo: True
+  when: not maven_directory.stat.exists
+  tags:
+    - install-maven
+
+- name: Create Symlink of Maven
+  file: 
+    src: /usr/share/apache-maven-{{ MAVEN_VERSION }}/bin/mvn
+    dest: /usr/bin/mvn
+    owner: root 
+    group: root 
+    state: link 
+    mode: 777
+  sudo: True
+  tags:
+    - install-maven

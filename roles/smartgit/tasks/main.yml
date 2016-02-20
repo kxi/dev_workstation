@@ -1,0 +1,37 @@
+- name: Check If SmartGit is Installed
+  stat: path=/usr/bin/smartgit
+  register: smartgit_binary
+  tags:
+    - install-smartgit
+
+- name: Download SmartGit Installer
+  get_url: 
+    url: http://www.syntevo.com/static/smart/download/smartgit/smartgit-linux-{{ Smartgit_download_VERSION }}.tar.gz
+    dest: /tmp/smartgit-generic-{{ Smartgit_VERSION }}.tar.gz
+  sudo: True
+  when: not smartgit_binary.stat.exists
+  tags:
+    - install-smartgit
+
+
+- name: Copy and Unzip SmartGit Installer
+  unarchive:
+    src: /tmp/smartgit-generic-{{ Smartgit_VERSION }}.tar.gz
+    dest: /usr/local
+    copy: no
+  sudo: True
+  when: not smartgit_binary.stat.exists
+  tags:
+    - install-smartgit
+
+- name: Create Symlink of SmartGit
+  file: 
+    src: /usr/local/smartgit/bin/smartgit.sh
+    dest: /usr/bin/smartgit
+    owner: root 
+    group: root 
+    state: link 
+    mode: 777
+  sudo: True
+  tags:
+    - install-smartgit

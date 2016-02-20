@@ -1,0 +1,30 @@
+- name: Add Java Repo
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  sudo: True
+  with_items:
+    - ppa:webupd8team/java  
+  tags:
+    - install-jdk
+
+
+- name: Accept Oracle License 
+  debconf: 
+    name: "oracle-java8-installer"
+    question: "shared/accepted-oracle-license-v1-1" 
+    value: "true" 
+    vtype: "select"
+  tags:
+    - install-jdk
+
+- name: Install Packages
+  apt: 
+    pkg: "{{ item }}" 
+    update_cache: yes 
+    cache_valid_time: 3600
+  sudo: True
+  with_items:
+    - oracle-java8-installer
+  tags:
+    - install-jdk

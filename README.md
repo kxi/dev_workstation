@@ -1,12 +1,12 @@
-# A VM with Eclipse, Maven, Git Pre-installed.
+# A VM with Java Dev Environment
 ## Prerequisite
 * [VirtualBox](https://www.virtualbox.org/)
 * [Vagrant](https://www.vagrantup.com/)
 * [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* [Ansible](http://http://docs.ansible.com/ansible/intro_installation.html)
 
 
-
-## How To Use (OSX/Linux)
+## Preparation (OSX/Linux)
 ######  Download the Vagrant file
 
     mkdir ~/vagrant
@@ -22,8 +22,9 @@
 
 ###### Copy Installer to 
 
-    cp eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz  ~/vagrant/dev_workstation/files/
+    cp eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz  ~/tmp/
 
+## Vagrant Operation
 ###### Check Status of the VM
 
     vagrant status
@@ -57,3 +58,20 @@
 ###### Destroy the VM
 
     vagrant destroy dev-desktop
+
+
+## Ansible Post-installation (Desktop, JDK, Maven, Git, SmartGit, Workbench etc.)
+###### Install Ansible
+
+    sudo pip install ansible
+
+
+###### Run Ansible Playbook
+
+    export ANSIBLE_HOST_KEY_CHECKING=False
+    ansible-playbook post-install.yml -i inventory
+
+
+###### Install a Specific Ansible Playbook
+
+    ansible-playbook post-install.yml -i inventory --tags "install-maven"

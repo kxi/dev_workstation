@@ -1,0 +1,24 @@
+- name: "Create Account Rubin"
+  user:
+    name: "rubin"
+#   python -c 'import crypt; print crypt.crypt("rubin", "rubin")'
+    password: "rubkAictrgrpc"
+    update_password: "always"
+    uid: "1002"
+    home: "/home/rubin"
+    shell: "/bin/bash"
+  sudo: true
+  tags:
+    - add-user
+
+- name: "Ensure /etc/sudoers rubin account sudo all"
+  lineinfile:
+    dest: "/etc/sudoers"
+    state: present
+    regexp: '^rubin'
+    insertafter: '^root'
+    line: "rubin    ALL=(ALL:ALL) ALL"
+    validate: 'visudo -cf %s'
+  sudo: true
+  tags:
+    - add-user

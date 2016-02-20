@@ -1,0 +1,46 @@
+- name: Check If Eclipse is Installed
+  stat: path=/opt/eclipse/eclipse
+  register: eclipse_binary
+  tags:
+    - install-eclipse
+
+- name: Copy Eclipse Installer
+  shell: hostname 
+  when: not eclipse_binary.stat.exists
+  tags:
+    - install-eclipse
+
+- name: Copy and Unzip Eclipse Installer
+  unarchive:
+    src: /tmp/eclipse-jee-mars-1-linux-gtk-x86_64.tar.gz
+    dest: /opt
+  sudo: True
+  when: not eclipse_binary.stat.exists
+  tags:
+    - install-eclipse
+
+- name: Copy eclipse.desktop
+  copy:
+    src: eclipse.desktop
+    dest: /usr/share/applications/eclipse.desktop
+  sudo: True
+  tags:
+    - install-eclipse
+
+- name: Copy eclipse.desktop
+  shell: desktop-file-install /usr/share/applications/eclipse.desktop
+  sudo: True
+  tags:
+    - install-eclipse
+
+- name: Create Symlink of Eclipse
+  file: 
+    src: /opt/eclipse/eclipse
+    dest: /usr/local/bin/eclipse
+    owner: root 
+    group: root 
+    state: link 
+    mode: 777
+  sudo: True
+  tags:
+    - install-eclipse
