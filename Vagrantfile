@@ -21,7 +21,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     desktop.vm.network "forwarded_port", guest: 80, host: 1080
     desktop.vm.network "private_network", ip: "192.168.50.3"
+<<<<<<< Updated upstream
 #    desktop.vm.network "forwarded_port", guest: 443, host: 8443
+=======
+    desktop.vm.network "public_network", ip: "192.168.0.150"
+#  config.vm.network "forwarded_port", guest: 443, host: 8443
+>>>>>>> Stashed changes
   end
 end
 
