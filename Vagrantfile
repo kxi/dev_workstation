@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Permit anyone to start the GUI
 #  config.vm.provision "shell", inline: "sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
 
-    desktop.vm.network "forwarded_port", guest: 80, host: 1080
+    desktop.vm.network "forwarded_port", guest: 80, host: 10080
     desktop.vm.network "private_network", ip: "192.168.50.3"
 #    desktop.vm.network "forwarded_port", guest: 443, host: 8443
   end

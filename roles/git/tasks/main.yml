@@ -6,26 +6,26 @@
 
 
 - name: Install Packages
-  apt: 
-    pkg: "{{ item }}" 
-    update_cache: yes 
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
     cache_valid_time: 3600
   sudo: True
   with_items:
-    - autoconf 
-    - libcurl4-gnutls-dev 
-    - libexpat1-dev 
-    - gettext 
-    - libz-dev 
+    - autoconf
+    - libcurl4-gnutls-dev
+    - libexpat1-dev
+    - gettext
+    - libz-dev
     - libssl-dev
   tags:
     - install-git
 
 
 - name: Download Git Installer
-  get_url: 
-    url: https://github.com/git/git/archive/v{{ GIT_VERSION }}.zip
-    dest: /tmp/v{{ GIT_VERSION }}.zip
+  get_url:
+    url: https://www.kernel.org/pub/software/scm/git/git-{{ GIT_VERSION }}.tar.gz
+    dest: /tmp/v{{ GIT_VERSION }}.tar.gz
   sudo: True
   when: not git_binary.stat.exists
   tags:
@@ -34,7 +34,7 @@
 
 - name: Copy and Unzip Git Installer
   unarchive:
-    src: /tmp/v{{ GIT_VERSION }}.zip
+    src: /tmp/v{{ GIT_VERSION }}.tar.gz
     dest: /tmp
     copy: no
   sudo: True
@@ -47,11 +47,10 @@
   args:
     chdir: "/tmp/git-{{ GIT_VERSION }}"
   with_items:
-    - make configure 
+    - make configure
     - ./configure --prefix=/usr
     - make
     - make install
   sudo: True
   tags:
     - install-git
-
